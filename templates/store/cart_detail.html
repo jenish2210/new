@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4 text-center">Your Shopping Cart</h1>
+
+{% if items %}
+  <div class="table-responsive">
+    <table class="table align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+        <tr>
+          <td class="text-start d-flex align-items-center">
+            {% if it.product.image %}
+              <img src="{{ it.product.image.url }}" alt="{{ it.product.name }}" width="60" class="me-2 rounded">
+            {% else %}
+              <img src="https://via.placeholder.com/60x60?text=No+Image" class="me-2 rounded">
+            {% endif %}
+            {{ it.product.name }}
+          </td>
+          <td>₹{{ it.product.price }}</td>
+          <td>{{ it.quantity }}</td>
+          <td>₹{{ it.subtotal }}</td>
+          <td>
+            <a href="{% url 'cart_remove' it.product.id %}" class="btn btn-outline-danger btn-sm">Remove</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <h4>Total: ₹{{ total }}</h4>
+    {% if user.is_authenticated %}
+      <a href="{% url 'checkout' %}" class="btn btn-luxury btn-lg">Proceed to Checkout</a>
+    {% else %}
+      <a href="/accounts/login/?next=/checkout/" class="btn btn-luxury btn-lg">Login to Checkout</a>
+    {% endif %}
+  </div>
+
+{% else %}
+  <p class="text-center fs-5 mt-5">Your cart is empty.</p>
+{% endif %}
+
+{% endblock %}

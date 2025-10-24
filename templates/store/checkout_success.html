@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center my-5">
+  <h1 class="mb-4">Order Placed Successfully!</h1>
+  <p class="fs-5">Thank you for shopping with CareShop.</p>
+  <p class="fw-bold">Order #{{ order.id }}</p>
+  <p>Total Amount Paid: <span class="text-gold fw-bold">₹{{ order.total }}</span></p>
+
+  <a href="/" class="btn btn-luxury btn-lg mt-3">Continue Shopping</a>
+  <a href="{% url 'order_history' %}" class="btn btn-outline-dark btn-lg mt-3 ms-2">View Orders</a>
+</div>
+{% endblock %}
